@@ -14,13 +14,11 @@ import {
 const Navbar = () => {
   const dispatch = useDispatch();
   const sidebarStatus = useSelector(selectSidebarStatus);
-  console.log(sidebarStatus);
 
   return (
     <NavbarWrapper className="d-flex align-items-center">
       <div className="container w-100">
         <div className="navbar-content">
-          
           <div className="brand-and-toggler d-flex align-items justify-content-between">
             {/* Nav Logo */}
             <Link

@@ -7,7 +7,7 @@ import {
 } from "react-icons/ai";
 import { FaGlobe } from "react-icons/fa";
 
-const GameDetails = () => {
+const GameDetails = ({gameData}) => {
   return <GameDetailsWrapper></GameDetailsWrapper>;
 };
 
