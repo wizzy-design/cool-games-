@@ -7,6 +7,9 @@ import {
 } from "react-icons/ai";
 import { FaGlobe } from "react-icons/fa";
 import PropTypes from "prop-types";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import { StoreItem } from "../store";
 
 const GameDetails = ({ gameData }) => {
   let platforms = gameData?.platforms?.map(
@@ -90,9 +93,7 @@ const GameDetails = ({ gameData }) => {
                 <span className="item-icon d-flex align-items-center justify-content-start me-2">
                   <AiFillTags size={20} />
                 </span>
-                <span className="item-title text-uppercase fw-6">
-                  genres:
-                </span>
+                <span className="item-title text-uppercase fw-6">genres:</span>
               </div>
               <span className="item-right item-value fw-4">
                 {genres?.join(", ")}
@@ -115,6 +116,57 @@ const GameDetails = ({ gameData }) => {
           </ul>
         </div>
       </div>
+
+      {/* Tabs */}
+      <Tabs>
+        <TabList>
+          <Tab>Description</Tab>
+          <Tab>Platform</Tab>
+          <Tab>Stores</Tab>
+        </TabList>
+
+        {/* Info for 'Description' Pannel */}
+        <TabPanel>
+          <h3 className="text-white mb-3">Game Description</h3>
+          <div
+            className="para-text"
+            dangerouslySetInnerHTML={{ __html: gameData?.description }}
+          ></div>
+        </TabPanel>
+
+        {/* Info for 'Platform' Pannel */}
+        <TabPanel>
+          <h3 className="text-white mb-3">Game Platforms</h3>
+          <div className="platforms-list card-list">
+            {gameData?.platforms?.map((item) => {
+              return (
+                <div
+                  className="platform-item text-white"
+                  key={item?.platform?.id}
+                >
+                  <p className="platform-name mb-2">{item?.platform?.name}</p>
+                  <div className="platform-img-wrapper img-fit-cover">
+                    <img
+                      src={item?.platform?.image_background}
+                      className="platform-img"
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </TabPanel>
+
+        {/* Info for 'Available Stores' Pannel */}
+        <TabPanel>
+          <h3 className="text-white mb-3">Available Stores</h3>
+          <div className="card-list">
+            {gameData?.stores?.map((item) => (
+              <StoreItem key={item?.store?.id} storeItem={item?.store} />
+            ))}
+          </div>
+        </TabPanel>
+      </Tabs>
     </GameDetailsWrapper>
   );
 };

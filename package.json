@@ -19,6 +19,7 @@
     "react-router-dom": "^6.17.0",
     "react-slick": "^0.29.0",
     "react-tab": "^1.0.0",
+    "react-tabs": "^6.0.2",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.0",
     "use-react-router-breadcrumbs": "^4.0.1"

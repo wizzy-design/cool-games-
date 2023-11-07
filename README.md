@@ -14,4 +14,5 @@ npm install slick-carousel --save
 
 To be able to have a trail of our routes like a breadcrumb, we download npm i use-react-router-breadcrumbs --save
 
+To be able to have this feature where there are different tabs and different content rendered by the tabs:
 npm install --save react-tab
