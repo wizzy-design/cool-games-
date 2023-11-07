@@ -1,6 +1,9 @@
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const GameDetailsPage = () => {
+  const { gameId } = useParams();
+  console.log(gameId);
   return <GameDetailsPageWrapper></GameDetailsPageWrapper>;
 };
 

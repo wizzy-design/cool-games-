@@ -15,24 +15,34 @@ import { fetchAsyncGames } from "../../redux/utils/gameUtils";
 import { useEffect } from "react";
 import { GameList } from "../../components/game/index";
 import { Link } from "react-router-dom";
-import { join_image } from "../../utils/images";
+import { join_image, store_image } from "../../utils/images";
 import {
   selectAllGenres,
   selectAllGenresStatus,
 } from "../../redux/store/genreSlice";
 import Tabs from "../../components/common/Tabs";
 import { fetchAsyncGenres } from "../../redux/utils/genreUtils";
+import {
+  selectAllStores,
+  selectAllStoresStatus,
+} from "../../redux/store/storeSlice";
+import StoreList from "../../components/store/StoreList";
+import { fetchAsyncStores } from "../../redux/utils/storeUtils";
 
 const HomePage = () => {
   const dispatch = useDispatch();
+  // Implementing the selector functions from utils
   const games = useSelector(selectAllGames);
   const gamesStatus = useSelector(selectAllGamesStatus);
   const genres = useSelector(selectAllGenres);
   const genresStatus = useSelector(selectAllGenresStatus);
+  const stores = useSelector(selectAllStores);
+  const storesStatus = useSelector(selectAllStoresStatus);
 
   useEffect(() => {
     dispatch(fetchAsyncGames());
     dispatch(fetchAsyncGenres());
+    dispatch(fetchAsyncStores());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -49,8 +59,10 @@ const HomePage = () => {
 
   return (
     <HomeWrapper>
+      {/* The Intro Banner */}
       <Banner />
 
+      {/* Display of top popular games */}
       <section className="section sc-popular">
         <div className="container">
           <Title
@@ -66,8 +78,10 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* Sliding Images of Games Component */}
       <ImageSlider />
 
+      {/* Join discord community */}
       <section
         className="section sc-join d-flex align-items-center"
         style={{
@@ -91,6 +105,7 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* Displays games according to Genre */}
       <section className="section sc-genres">
         <div className="container">
           <Title
@@ -107,6 +122,29 @@ const HomePage = () => {
         ) : (
           "No genres found!"
         )}
+      </section>
+
+      <section
+        className="sc-stores"
+        style={{
+          background: `linear-gradient(180deg, rgba(12, 10, 36, 0.73) 0%, rgba(0, 0, 0, 0.73) 72.9%), url(${store_image}) center/cover no-repeat`,
+        }}
+      >
+        <div className="container">
+          <Title
+            titleName={{
+              firstText: "our",
+              secondText: "game stores",
+            }}
+          />
+          {storesStatus === STATUS.LOADING ? (
+            <Preloader />
+          ) : stores?.length > 0 ? (
+            <StoreList stores={stores} />
+          ) : (
+            "No stores found!"
+          )}
+        </div>
       </section>
     </HomeWrapper>
   );

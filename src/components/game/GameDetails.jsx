@@ -1,4 +1,11 @@
 import styled from "styled-components";
+import {
+  AiFillClockCircle,
+  AiOutlineDesktop,
+  AiFillSetting,
+  AiFillTags,
+} from "react-icons/ai";
+import { FaGlobe } from "react-icons/fa";
 
 const GameDetails = () => {
   return <GameDetailsWrapper></GameDetailsWrapper>;

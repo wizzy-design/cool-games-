@@ -17,21 +17,45 @@ const GenreItem = ({ gameItem }) => {
         `${apiURL.gamesURL}/${gameItem.id}?${API_KEY}`
       );
       setGameData(data);
-    }; 
+    };
 
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
-  return <GenreItemWrapper className="card">
-    <div className="card-top img-fit-cover">
-      <img src={gameData?.background_image} alt={gameData?.name} />
-      <StarRating rating={gameData?.rating} />
-      <div className="ratings-count">
-        {gameData?.ratings_count} <BsStar className="ms-1" size={12} />
+
+  return (
+    <GenreItemWrapper className="card">
+      <div className="card-top img-fit-cover">
+        <img src={gameData?.background_image} alt={gameData?.name} />
+        <StarRating rating={gameData?.rating} />
+        <div className="ratings-count">
+          {gameData?.ratings_count} <BsStar className="ms-1" size={12} />
+        </div>
       </div>
-    </div>
-  </GenreItemWrapper>;
+      <div className="card-bottom">
+        <h4 className="text-white text-uppercase card-title">
+          {gameData?.name}
+        </h4>
+
+        <div className="block-wrap">
+          <div className="details-group">
+            <div className="details-item d-flex align-items-center">
+              <p className="details-item-name fw-6">Release Date:&nbsp;</p>
+              <p className="details-item-value">{gameData?.released}</p>
+            </div>
+            <div className="details-item d-flex align-items-center">
+              <p className="details-item-name fw-6">Updated:&nbsp;</p>
+              <p className="details-item-value">{gameData?.updated}</p>
+            </div>
+          </div>
+          <Link
+            to={`/games/${gameData?.id}`}
+            className="card-button text-uppercase mt-3"
+          >see more</Link>
+        </div>
+      </div>
+    </GenreItemWrapper>
+  );
 };
 
 export default GenreItem;

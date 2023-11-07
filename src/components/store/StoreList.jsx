@@ -1,7 +1,21 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import StoreItem from "./StoreItem";
 
-const StoreList = () => {
-  return <StoreListWrapper></StoreListWrapper>;
+const StoreList = ({ stores }) => {
+  return (
+    <StoreListWrapper>
+      <div className="store-list d-grid">
+        {stores?.map((item) => (
+          <StoreItem key={item.id} storeItem={item} />
+        ))}
+      </div>
+    </StoreListWrapper>
+  );
+};
+
+StoreList.propTypes = {
+  stores: PropTypes.array,
 };
 
 export default StoreList;

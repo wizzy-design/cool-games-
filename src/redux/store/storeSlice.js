@@ -1,17 +1,55 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { STATUS } from "../../utils/status";
+import { fetchAsyncStores } from "../utils/storeUtils";
+import { fetchAsyncGameDetails } from "../utils/gameUtils";
 
-const initialState = {};
+const initialState = {
+  stores: [],
+  storesStatus: STATUS.IDLE,
+  storesSingle: [],
+  storesSingleStatus: STATUS.IDLE,
+};
 
 const storeSlice = createSlice({
   name: "store",
   initialState,
-  builder: (builder) => {
-    // builder.addCase(someAction, (state, action) => {
-    // handle the action
-    //    });
-    // Add more cases using builder.addCase(...)
+  extraReducers: (builder) => {
+    // For the Game Stores
+    builder.addCase(fetchAsyncStores.pending, (state) => {
+      state.storesStatus = STATUS.LOADING;
+    });
+
+    builder.addCase(fetchAsyncStores.fulfilled, (state, action) => {
+      state.stores = action.payload; // Data recieved from API call
+      state.storesStatus = STATUS.SUCCEEDED;
+    });
+
+    builder.addCase(fetchAsyncStores.rejected, (state) => {
+      state.storesStatus = STATUS.FAILED;
+    });
+
+    // For the game details
+    builder.addCase(fetchAsyncGameDetails.pending, (state) => {
+      state.storesSingleStatus = STATUS.LOADING;
+    });
+
+    builder.addCase(fetchAsyncGameDetails.fulfilled, (state, action) => {
+      state.storesSingle = action.payload; // Data recieved from API call
+      state.storesSingleStatus = STATUS.SUCCEEDED;
+    });
+
+    builder.addCase(fetchAsyncGameDetails.rejected, (state) => {
+      state.storesSingleStatus = STATUS.FAILED;
+    });
   },
   reducers: {},
 });
+
+// Selector functions
+export const selectAllStores = (state) => state.store.stores.results;
+export const selectAllStoresStatus = (state) => state.store.storesStatus;
+export const selectSingleStore = (state) => state.store.storeSingle;
+export const selectSingleStoreStatus = (state) =>
+  state.store.storesSingleStatus;
 
 export default storeSlice.reducer;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import GameItem from "./GameItem";
 
 const GameList = ({ games, sliceValue = games.length }) => {
-  console.log(games, sliceValue);
+  // console.log(games, sliceValue);
   return (
     <GameListWrapper>
       <div className="card-list">
