@@ -5,9 +5,8 @@ import { fetchAsyncGameDetails, fetchAsyncGames } from "../utils/gameUtils";
 const initialState = {
   games: [],
   gamesStatus: STATUS.IDLE,
-  gamesSingle: [],
+  gamesSingle: {},
   gamesSingleStatus: STATUS.IDLE,
-  gamesDetails: [],
 };
 
 const gamesSlice = createSlice({
@@ -49,6 +48,5 @@ export const selectGamesNextPage = (state) => state.game.games.next;
 export const selectGamesPrevPage = (state) => state.game.games.previous;
 export const selectSingleGame = (state) => state.game.gamesSingle;
 export const selectSingleGameStatus = (state) => state.game.gamesSingleStatus;
-export const selectGameDetails = (state) => state.game.gamesDetails;
 
 export default gamesSlice.reducer;

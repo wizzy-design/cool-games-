@@ -6,12 +6,124 @@ import {
   AiFillTags,
 } from "react-icons/ai";
 import { FaGlobe } from "react-icons/fa";
+import PropTypes from "prop-types";
 
-const GameDetails = ({gameData}) => {
-  return <GameDetailsWrapper></GameDetailsWrapper>;
+const GameDetails = ({ gameData }) => {
+  let platforms = gameData?.platforms?.map(
+    (platform) => platform.platform.name
+  );
+  let developers = gameData?.developers?.map((developer) => developer.name);
+  let genres = gameData?.genres?.map((genre) => genre.name);
+  let publishers = gameData?.publishers?.map((publisher) => publisher.name);
+
+  return (
+    <GameDetailsWrapper>
+      <div className="details-title">
+        <h3 className="details-title-text text-white fw-6 text-uppercase">
+          {gameData?.name}
+        </h3>
+      </div>
+      <div className="details-grid d-grid">
+        <div className="details-left img-fit-cover">
+          <img src={`${gameData?.background_image}`} alt={gameData?.name} />
+        </div>
+
+        <div className="details-right">
+          <h4 className="details-right-title fw-7 text-green mb-3">
+            Game <span className="text-white">Details</span>
+          </h4>
+
+          {/* This displays limited text on the description of the games */}
+          <div
+            className="para-text"
+            dangerouslySetInnerHTML={{
+              __html:
+                gameData?.description?.split(".").splice(0, 3).join(".") + ".",
+            }}
+          ></div>
+
+          <ul className="details-list-group">
+            <li className="list-group-item text-white d-flex align-items-center flex-wrap">
+              <div className="item-left d-flex align-items-center">
+                <span className="item-icon d-flex align-items-center justify-content-start me-2">
+                  <AiFillClockCircle size={20} />
+                </span>
+                <span className="item-title text-uppercase fw-6">
+                  release date:
+                </span>
+              </div>
+              <span className="item-right item-value fw-4">
+                {gameData?.released}
+              </span>
+            </li>
+
+            <li className="list-group-item text-white d-flex align-items-center flex-wrap">
+              <div className="item-left d-flex align-items-center">
+                <span className="item-icon d-flex align-items-center justify-content-start me-2">
+                  <AiOutlineDesktop size={20} />
+                </span>
+                <span className="item-title text-uppercase fw-6">
+                  platforms:
+                </span>
+              </div>
+              <span className="item-right item-value fw-4">
+                {platforms?.join(", ")}
+              </span>
+            </li>
+
+            <li className="list-group-item text-white d-flex align-items-center flex-wrap">
+              <div className="item-left d-flex align-items-center">
+                <span className="item-icon d-flex align-items-center justify-content-start me-2">
+                  <AiFillSetting size={20} />
+                </span>
+                <span className="item-title text-uppercase fw-6">
+                  developers:
+                </span>
+              </div>
+              <span className="item-right item-value fw-4">
+                {developers?.join(", ")}
+              </span>
+            </li>
+
+            <li className="list-group-item text-white d-flex align-items-center flex-wrap">
+              <div className="item-left d-flex align-items-center">
+                <span className="item-icon d-flex align-items-center justify-content-start me-2">
+                  <AiFillTags size={20} />
+                </span>
+                <span className="item-title text-uppercase fw-6">
+                  genres:
+                </span>
+              </div>
+              <span className="item-right item-value fw-4">
+                {genres?.join(", ")}
+              </span>
+            </li>
+
+            <li className="list-group-item text-white d-flex align-items-center flex-wrap">
+              <div className="item-left d-flex align-items-center">
+                <span className="item-icon d-flex align-items-center justify-content-start me-2">
+                  <FaGlobe size={20} />
+                </span>
+                <span className="item-title text-uppercase fw-6">
+                  publishers:
+                </span>
+              </div>
+              <span className="item-right item-value fw-4">
+                {publishers?.join(", ")}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </GameDetailsWrapper>
+  );
 };
 
 export default GameDetails;
+
+GameDetails.propTypes = {
+  gameData: PropTypes.object,
+};
 
 const GameDetailsWrapper = styled.div`
   background: rgba(0, 0, 0, 0.16);
