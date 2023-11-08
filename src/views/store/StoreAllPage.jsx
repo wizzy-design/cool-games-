@@ -1,7 +1,47 @@
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import {
+  selectAllStores,
+  selectAllStoresStatus,
+} from "../../redux/store/storeSlice";
+import { useEffect } from "react";
+import { fetchAsyncStores } from "../../redux/utils/storeUtils";
+import Title from "../../components/common/Title";
+import { STATUS } from "../../utils/status";
+import { StoreList } from "../../components/store";
+import PreLoader from "../../components/common/Preloader";
 
 const StoreAllPage = () => {
-  return <StoreAllPageWrapper></StoreAllPageWrapper>;
+  const dispatch = useDispatch();
+  const stores = useSelector(selectAllStores);
+  const storesStatus = useSelector(selectAllStoresStatus);
+
+  useEffect(() => {
+    dispatch(fetchAsyncStores());
+  }, []);
+  return (
+    <StoreAllPageWrapper>
+      <div className="sc-stores section">
+        <div className="container">
+          <Title
+            titleName={{
+              firstText: "all",
+              secondText: "stores",
+            }}
+          />
+          {storesStatus === STATUS.LOADING ? (
+            <PreLoader />
+          ) : stores?.length > 0 ? (
+            <>
+              <StoreList stores={stores} />
+            </>
+          ) : (
+            "No stores found!"
+          )}
+        </div>
+      </div>
+    </StoreAllPageWrapper>
+  );
 };
 
 export default StoreAllPage;

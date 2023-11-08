@@ -23,7 +23,7 @@ const storeSlice = createSlice({
       state.storesStatus = STATUS.SUCCEEDED;
     });
 
-    builder.addCase(fetchAsyncStoresDetails.rejected, (state) => {
+    builder.addCase(fetchAsyncStores.rejected, (state) => {
       state.storesStatus = STATUS.FAILED;
     });
 
@@ -37,7 +37,7 @@ const storeSlice = createSlice({
       state.storesSingleStatus = STATUS.SUCCEEDED;
     });
 
-    builder.addCase(fetchAsyncStores.rejected, (state) => {
+    builder.addCase(fetchAsyncStoresDetails.rejected, (state) => {
       state.storesSingleStatus = STATUS.FAILED;
     });
   },
