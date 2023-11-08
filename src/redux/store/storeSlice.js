@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { STATUS } from "../../utils/status";
-import { fetchAsyncStores } from "../utils/storeUtils";
-import { fetchAsyncGameDetails } from "../utils/gameUtils";
+import { fetchAsyncStores, fetchAsyncStoresDetails } from "../utils/storeUtils";
 
 const initialState = {
   stores: [],
@@ -24,21 +23,21 @@ const storeSlice = createSlice({
       state.storesStatus = STATUS.SUCCEEDED;
     });
 
-    builder.addCase(fetchAsyncStores.rejected, (state) => {
+    builder.addCase(fetchAsyncStoresDetails.rejected, (state) => {
       state.storesStatus = STATUS.FAILED;
     });
 
     // For the game details
-    builder.addCase(fetchAsyncGameDetails.pending, (state) => {
+    builder.addCase(fetchAsyncStoresDetails.pending, (state) => {
       state.storesSingleStatus = STATUS.LOADING;
     });
 
-    builder.addCase(fetchAsyncGameDetails.fulfilled, (state, action) => {
+    builder.addCase(fetchAsyncStoresDetails.fulfilled, (state, action) => {
       state.storesSingle = action.payload; // Data recieved from API call
       state.storesSingleStatus = STATUS.SUCCEEDED;
     });
 
-    builder.addCase(fetchAsyncGameDetails.rejected, (state) => {
+    builder.addCase(fetchAsyncStores.rejected, (state) => {
       state.storesSingleStatus = STATUS.FAILED;
     });
   },
@@ -48,7 +47,7 @@ const storeSlice = createSlice({
 // Selector functions
 export const selectAllStores = (state) => state.store.stores.results;
 export const selectAllStoresStatus = (state) => state.store.storesStatus;
-export const selectSingleStore = (state) => state.store.storeSingle;
+export const selectSingleStore = (state) => state.store.storesSingle;
 export const selectSingleStoreStatus = (state) =>
   state.store.storesSingleStatus;
 

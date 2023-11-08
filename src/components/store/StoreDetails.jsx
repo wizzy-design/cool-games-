@@ -1,10 +1,46 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const StoreDetails = () => {
-  return <StoreDetailsWrapper></StoreDetailsWrapper>;
+const StoreDetails = ({ storeData }) => {
+  return (
+    <StoreDetailsWrapper>
+      <div className="details-grid d-grid">
+        <div className="details-left img-fit-cover">
+          <img src={storeData?.image_background} alt={storeData?.name} />
+        </div>
+
+        <div className="details-right mt-4">
+          <h5 className="card-title text-uppercase fw-7">
+            <Link to={`stores/${storeData.id}`} className="text-white">
+              {storeData?.name}
+            </Link>
+          </h5>
+          <ul className="card-info">
+            <li>
+              <span className="fw-7 text-white">Domain:</span>
+              <a
+                href={"https://www." + storeData?.domain}
+                className="text-white"
+              ></a>
+            </li>
+            <li>
+              <span className="fw-7 text-white">Games Count:</span>
+              <span className="text-white">{storeData?.games_count}</span>
+            </li>
+          </ul>
+          <div className="para-text" dangerouslySetInnerHTML={{__html:storeData?.description}}></div>
+        </div>
+      </div>
+    </StoreDetailsWrapper>
+  );
 };
 
 export default StoreDetails;
+
+StoreDetails.propTypes = {
+  storeData: PropTypes.object,
+};
 
 const StoreDetailsWrapper = styled.div`
   padding: 32px 0;

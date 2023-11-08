@@ -1,7 +1,49 @@
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectSingleStore,
+  selectSingleStoreStatus,
+} from "../../redux/store/storeSlice";
+import { useEffect } from "react";
+import { fetchAsyncStoresDetails } from "../../redux/utils/storeUtils";
+import { Breadcrumb } from "../../components/common/index";
+import { STATUS } from "../../utils/status";
+import StoreDetails from "../../components/store/StoreDetails";
+import PreLoader from "../../components/common/Preloader";
 
 const StoreDetailsPage = () => {
-  return <StoreDetailsPageWrapper></StoreDetailsPageWrapper>;
+  const { storeId } = useParams();
+  const dispatch = useDispatch();
+  const singleStoreData = useSelector(selectSingleStore);
+  const singleStoreStatus = useSelector(selectSingleStoreStatus);
+
+  useEffect(() => {
+    dispatch(fetchAsyncStoresDetails(storeId));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storeId]);
+
+  console.log(singleStoreData);
+
+  const storeNameById = {
+    [singleStoreData.id]: singleStoreData.name,
+  };
+
+  return (
+    <StoreDetailsPageWrapper>
+      <div className="sc-details">
+        <div className="container">
+          <Breadcrumb dataNameById={storeNameById} />
+
+          {singleStoreStatus === STATUS.LOADING ? (
+            <PreLoader />
+          ) : (
+            <StoreDetails storeData={singleStoreData} />
+          )}
+        </div>
+      </div>
+    </StoreDetailsPageWrapper>
+  );
 };
 
 export default StoreDetailsPage;

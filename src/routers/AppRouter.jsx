@@ -20,7 +20,7 @@ const AppRouter = () => {
           <Route path="/games" element={<ViewGameAll />} />
           <Route path="/games/:gameId" element={<ViewGameDetails />} />
           <Route path="/stores" element={<ViewStoreAll />} />
-          <Route path="/stores/:storesId" element={<ViewStoreDetails />} />
+          <Route path="/stores/:storeId" element={<ViewStoreDetails />} />
           <Route path="/creators" element={<ViewCreatorAll />} />
           <Route path="*" element={<Error />} />
         </Route>
